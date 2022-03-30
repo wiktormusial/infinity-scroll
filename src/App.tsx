@@ -1,5 +1,7 @@
+import Launches from "./components/Launches";
+
 const App = () => {
-  return <div>Hello world</div>;
+  return <Launches />;
 };
 
 export default App;
