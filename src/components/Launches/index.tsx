@@ -1,5 +1,5 @@
+import { useState, useEffect } from "react";
 import { useQuery, NetworkStatus } from "@apollo/client";
-import { useState } from "react";
 import { GET_LAUNCHES } from "../../graphql/queries/GET_LAUNCHES";
 import { LaunchList, LaunchVars } from "../../types/launches";
 import LaunchesListElement from "./LaunchesListElement";
@@ -19,6 +19,22 @@ const Launches = () => {
     notifyOnNetworkStatusChange: true,
   });
 
+  useEffect(() => {
+    window.onscroll = () => {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+        const length = data!.launches.length;
+        fetchMore({
+          variables: {
+            limit: limit,
+            offset: length,
+          },
+        }).then((res) => {
+          setLimit(length + res.data.launches.length);
+        });
+      }
+    };
+  }, [data, fetchMore]);
+
   if (networkStatus === NetworkStatus.loading && !data) {
     return <div>Loading...</div>;
   }
@@ -28,29 +44,14 @@ const Launches = () => {
   return (
     <div className="container">
       Launches list
-      <br />
-      <button
-        onClick={() => {
-          const length = data!.launches.length;
-
-          fetchMore({
-            variables: {
-              limit: 10,
-              offset: length,
-            },
-          }).then((res) => {
-            setLimit(length + res.data.launches.length);
-          });
-        }}
-      >
-        Fetch more
-      </button>
       <ul className="list">
         {data &&
           data.launches.map((item) => {
             return <LaunchesListElement key={item.id} item={item} />;
           })}
-        {networkStatus === NetworkStatus.fetchMore && <li>Loading</li>}
+        {networkStatus === NetworkStatus.fetchMore && (
+          <li className="list__loading">Loading</li>
+        )}
       </ul>
     </div>
   );
