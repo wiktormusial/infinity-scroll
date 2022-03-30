@@ -1,4 +1,4 @@
-import { useQuery } from "@apollo/client/react";
+import { useQuery } from "@apollo/client";
 import { GET_LAUNCHES } from "../../graphql/queries/GET_LAUNCHES";
 import { LaunchList, LaunchVars } from "../../types/launches";
 
