@@ -3,6 +3,7 @@ import { useState } from "react";
 import { GET_LAUNCHES } from "../../graphql/queries/GET_LAUNCHES";
 import { LaunchList, LaunchVars } from "../../types/launches";
 import LaunchesListElement from "./LaunchesListElement";
+import "./Launches.css";
 
 const Launches = () => {
   const [limit, setLimit] = useState(10);
@@ -25,7 +26,7 @@ const Launches = () => {
   if (error) return <div>{error}</div>;
 
   return (
-    <div>
+    <div className="container">
       Launches list
       <br />
       <button
@@ -44,7 +45,7 @@ const Launches = () => {
       >
         Fetch more
       </button>
-      <ul>
+      <ul className="list">
         {data &&
           data.launches.map((item) => {
             return <LaunchesListElement key={item.id} item={item} />;

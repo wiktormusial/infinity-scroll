@@ -6,7 +6,7 @@ interface Props {
 }
 
 const LaunchesListElement: React.FC<Props> = ({ item }) => {
-  return <li>{item.mission_name}</li>;
+  return <li className="list__item">{item.mission_name}</li>;
 };
 
 export default LaunchesListElement;
