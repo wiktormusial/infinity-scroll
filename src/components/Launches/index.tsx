@@ -1,6 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { GET_LAUNCHES } from "../../graphql/queries/GET_LAUNCHES";
 import { LaunchList, LaunchVars } from "../../types/launches";
+import LaunchesListElement from "./LaunchesListElement";
 
 const Launches = () => {
   const { loading, error, data } = useQuery<LaunchList, LaunchVars>(
@@ -20,9 +21,10 @@ const Launches = () => {
     <div>
       Launches list
       <ul>
-        {data?.launches.map((item) => {
-          return <li>{item.id}</li>;
-        })}
+        {data &&
+          data.launches.map((item) => {
+            return <LaunchesListElement key={item.id} item={item} />;
+          })}
       </ul>
     </div>
   );
