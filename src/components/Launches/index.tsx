@@ -39,7 +39,7 @@ const Launches = () => {
     return <div>Loading...</div>;
   }
 
-  if (error) return <div>{error}</div>;
+  if (error) return <div>{error.message}</div>;
 
   return (
     <div className="container">
